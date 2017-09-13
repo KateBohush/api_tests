@@ -17,7 +17,6 @@ import ru.yandex.qatools.allure.annotations.Features;
 @DataLoader(filePaths = {"src/test/java/de/fidor/testdata/GetTokenData.xls"}, loaderType = LoaderType.EXCEL, writeData = false)
 @Parallel(threads = 10)
 @Features({"some feature"})
-@Display(fields = {"description"})
 public class GetTokenTests extends TestBase {
 
     @Test

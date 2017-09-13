@@ -2,7 +2,6 @@ package de.fidor.tests;
 
 import com.google.gson.Gson;
 import de.fidor.core.CustomEasyTestRunner;
-import de.fidor.dal.datamodels.authservice.GetTokenResponse;
 import de.fidor.testdata.converters.TestCaseConverter;
 import de.fidor.testdata.converters.authservice.GetTokenExpectedResponseConverter;
 import de.fidor.testdata.converters.authservice.GetTokenRequestConverter;
@@ -26,7 +25,7 @@ public abstract class TestBase {
 
 
     @Rule
-    public TestWatcher screenshotOnFailure = new TestWatcher() {
+    public TestWatcher testWatcher = new TestWatcher() {
         @Override
         protected void failed(Throwable e, Description description) {
 
