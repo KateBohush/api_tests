@@ -1,4 +1,4 @@
-package de.fidor.testdata.converters;
+package de.fidor.dal.datamodels.infrastructure;
 
 import lombok.Data;
 

@@ -1,6 +1,7 @@
 package de.fidor.testdata.converters;
 
 import com.google.gson.Gson;
+import de.fidor.dal.datamodels.infrastructure.GherkinTestCase;
 import org.easetech.easytest.converter.AbstractConverter;
 import ru.yandex.qatools.allure.annotations.Parameter;
 
