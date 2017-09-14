@@ -11,60 +11,72 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public abstract class DataValidator {
 
-    private Map<Class<?>, String[]> ignoreProps;
+   private Map<Class<?>, String[]> ignoreProps;
 
-    protected ResponseWithData response;
+   protected ResponseWithData response;
 
-    public DataValidator(ResponseWithData response) {
-        this.response = response;
-    }
+   public DataValidator(ResponseWithData response) {
+      this.response = response;
+   }
 
-    public void setIgnoreProps(Class<?> obj, String... fieldsToIgnore) {
-        if (fieldsToIgnore != null) {
-            HashMap<Class<?>, String[]> fieldsToIgnoreMap = new HashMap<>();
-            List<String> list = Arrays.asList(fieldsToIgnore);
-            fieldsToIgnoreMap.put(obj, list.toArray(new String[list.size()]));
-            ignoreProps = fieldsToIgnoreMap;
-        }
-    }
+   public void setIgnoreProps(Class<?> obj, String... fieldsToIgnore) {
+      if (fieldsToIgnore != null) {
+         HashMap<Class<?>, String[]> fieldsToIgnoreMap = new HashMap<>();
+         List<String> list = Arrays.asList(fieldsToIgnore);
+         fieldsToIgnoreMap.put(obj, list.toArray(new String[list.size()]));
+         ignoreProps = fieldsToIgnoreMap;
+      }
+   }
 
-    protected void validateStatusCode(int expectedCode) {
-        int actualCode = response.getHttpFullResponse().getStatusCode();
-        Assert.assertEquals("!!!Status Code Verification Failed!!! expected code = "
-                + expectedCode + "; actual code = " + actualCode, expectedCode, actualCode);
-    }
+   protected void validateStatusCode(int expectedCode) {
+      int actualCode = response.getHttpFullResponse().getStatusCode();
+      Assert.assertEquals("!!!Status Code Verification Failed!!! expected code = "
+            + expectedCode + "; actual code = " + actualCode, expectedCode, actualCode);
+   }
 
-    public DiffResult compare(Object exp, Object act) {
+   public DiffResult compare(Object exp, Object act) {
 
-        ObjectDifferBuilder differBuilder = ObjectDifferBuilder.startBuilding();
+      ObjectDifferBuilder differBuilder = ObjectDifferBuilder.startBuilding();
 
-        if (ignoreProps != null) {
-            ignoreProps.keySet()
-                    .forEach(c -> differBuilder.inclusion().exclude().propertyNameOfType(c, ignoreProps.get(c)));
-        }
+      if (ignoreProps != null) {
+         ignoreProps.keySet()
+               .forEach(c -> differBuilder.inclusion().exclude().propertyNameOfType(c, ignoreProps.get(c)));
+      }
 
-        DiffNode diffs = differBuilder.build().compare(act, exp);
-        DiffResult result = new DiffResult();
+      DiffNode diffs = differBuilder.build().compare(act, exp);
+      DiffResult result = new DiffResult();
 
-        if (diffs.getState() != DiffNode.State.UNTOUCHED) {
-            StringBuilder differences = new StringBuilder();
-            diffs.visit((node, visit) -> {
-                if (node.childCount() == 0) {
-                    Object was = node.canonicalGet(exp);
-                    Object became = node.canonicalGet(act);
-                    differences.append(node.getPath() + " => "
-                            + node.getState() + " ( expected: " + was + ", but found actual: " + became + " )\n");
-                }
-            });
-            result.diffs = differences.toString();
-            System.out.println(diffs);
-            result.diffState = diffs.getState();
-        } else {
-            result.diffState = diffs.getState();
-        }
-        return result;
-    }
+      if (diffs.getState() != DiffNode.State.UNTOUCHED) {
+         StringBuilder differences = new StringBuilder();
+         diffs.visit((node, visit) -> {
+            if (node.childCount() == 0) {
+               Object was = node.canonicalGet(exp);
+               Object became = node.canonicalGet(act);
+               differences.append(node.getPath() + " => "
+                     + node.getState() + " ( expected: " + was + ", but found actual: " + became + " )\n");
+            }
+         });
+         result.diffs = differences.toString();
+         System.out.println(diffs);
+         result.diffState = diffs.getState();
+      } else {
+         result.diffState = diffs.getState();
+      }
+      return result;
+   }
+
+   public void compareList(List exp, List act) {
+
+      if (exp != null && act != null) {
+         Assert.assertEquals(exp.size(), act.size());
+         IntStream.range(0, exp.size()).forEach(i ->
+               Assert.assertEquals("Actual result differs from expected",
+                     DiffNode.State.UNTOUCHED, compare(exp.get(i), act.get(i)).getDiffState())
+         );
+      }
+   }
 }
