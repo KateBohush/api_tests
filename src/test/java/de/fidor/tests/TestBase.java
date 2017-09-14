@@ -6,6 +6,7 @@ import de.fidor.dal.datamodels.authservice.GetTokenResponse;
 import de.fidor.testdata.converters.TestCaseConverter;
 import de.fidor.testdata.converters.authservice.GetTokenExpectedResponseConverter;
 import de.fidor.testdata.converters.authservice.GetTokenRequestConverter;
+import de.fidor.testdata.converters.cardservice.GetCardExpectedResponseConverter;
 import org.easetech.easytest.annotation.Converters;
 import org.easetech.easytest.annotation.Display;
 import org.junit.Before;
@@ -16,7 +17,7 @@ import org.junit.runner.RunWith;
 import org.slf4j.LoggerFactory;
 
 @RunWith(CustomEasyTestRunner.class)
-@Converters({TestCaseConverter.class, GetTokenRequestConverter.class, GetTokenExpectedResponseConverter.class})
+@Converters({TestCaseConverter.class, GetTokenRequestConverter.class, GetTokenExpectedResponseConverter.class, GetCardExpectedResponseConverter.class})
 @Display(fields = "description")
 public abstract class TestBase {
 
