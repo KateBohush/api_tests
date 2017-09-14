@@ -1,6 +1,7 @@
 package de.fidor.bl.services;
 
 import de.fidor.bl.services.endpoints.AuthService;
+import de.fidor.bl.services.endpoints.UserRegistrService;
 import de.fidor.core.RestClient;
 
 public class ServiceFactory implements IEnvironment {
@@ -21,5 +22,7 @@ public class ServiceFactory implements IEnvironment {
     public static AuthService getAuthService(){
         return new AuthService();
     }
+
+    public static UserRegistrService  getUserRegistrService() { return new UserRegistrService();}
 
 }

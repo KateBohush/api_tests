@@ -2,9 +2,13 @@ package de.fidor.tests;
 
 import com.google.gson.Gson;
 import de.fidor.core.CustomEasyTestRunner;
+import de.fidor.dal.datamodels.userregistrservice.GetTokenCredentialsResponse;
 import de.fidor.testdata.converters.TestCaseConverter;
 import de.fidor.testdata.converters.authservice.GetTokenExpectedResponseConverter;
 import de.fidor.testdata.converters.authservice.GetTokenRequestConverter;
+import de.fidor.testdata.converters.userregistrservice.GetTokenCredentialsResponseConverter;
+import de.fidor.testdata.converters.userregistrservice.RegistrationRequestConverter;
+import de.fidor.testdata.converters.userregistrservice.RegistrationResponseConverter;
 import org.easetech.easytest.annotation.Converters;
 import org.easetech.easytest.annotation.Display;
 import org.junit.Before;
@@ -15,7 +19,7 @@ import org.junit.runner.RunWith;
 import org.slf4j.LoggerFactory;
 
 @RunWith(CustomEasyTestRunner.class)
-@Converters({TestCaseConverter.class, GetTokenRequestConverter.class, GetTokenExpectedResponseConverter.class})
+@Converters({TestCaseConverter.class, GetTokenRequestConverter.class, GetTokenExpectedResponseConverter.class, RegistrationResponseConverter.class, RegistrationRequestConverter.class, GetTokenCredentialsResponseConverter.class})
 @Display(fields = "description")
 public abstract class TestBase {
 

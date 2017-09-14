@@ -7,4 +7,9 @@ public class ValidatorFactory {
     public static AuthServiceValidator getAuthServiceValidator(ResponseWithData response){
         return new AuthServiceValidator(response);
     }
+
+    public static UserRegistrSeviceValidator getUserRegistrSeviceValidator(ResponseWithData response){
+        return new UserRegistrSeviceValidator(response);
+    }
+
 }
