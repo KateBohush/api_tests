@@ -14,8 +14,9 @@ public class CardServiceValidator extends DataValidator {
 
    public void verifyCardWasReturned(GetCardResponse expectedResult) {
       validateStatusCode(200);
-      setIgnoreProps(GetCardResponse.class, "data");
+      setIgnoreProps(GetCardResponse.class);
       GetCardResponse actualEntity = (GetCardResponse) response.getResponseEntity();
+      compareList(expectedResult.getData(), actualEntity.getData());
       Assert.assertEquals("Actual result differs from expected",
             DiffNode.State.UNTOUCHED, compare(expectedResult, actualEntity).getDiffState());
       Assert.assertTrue(actualEntity.getData() != null);
