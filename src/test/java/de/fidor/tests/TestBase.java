@@ -29,11 +29,10 @@ public abstract class TestBase {
    protected Gson converter = new Gson();
 
 
-   @Rule
-   public TestWatcher screenshotOnFailure = new TestWatcher() {
-      @Override
-      protected void failed(Throwable e, Description description) {
-
+    @Rule
+    public TestWatcher testWatcher = new TestWatcher() {
+        @Override
+        protected void failed(Throwable e, Description description) {
       }
 
       @Override

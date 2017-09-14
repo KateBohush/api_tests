@@ -2,6 +2,7 @@ package de.fidor.bl.validators;
 
 import de.danielbechler.diff.node.DiffNode;
 import de.fidor.dal.datamodels.authservice.GetTokenResponse;
+import de.fidor.dal.datamodels.infrastructure.DiffResult;
 import de.fidor.dal.datamodels.infrastructure.ResponseWithData;
 import org.junit.Assert;
 
